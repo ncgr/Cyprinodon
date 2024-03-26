@@ -79,11 +79,11 @@ Code that worked:
 ```
 
 ```
-/home/jm/saved/Perlscripts/annotation/run-repeat.bash /data/fish/Annotation/Cdesquamator.fasta CdesConsensi.fa.classified
+/home/jm/saved/Perlscripts/annotation/run-repeat-masker.bash /data/fish/Annotation/Cdesquamator.fasta CdesConsensi.fa.classified
 ```
 
 ```
-/home/jm/saved/Perlscripts/annotation/run-repeat.bash /data/fish/Annotation/Cvariegatus.fasta  CvarConsensi.fa.classified
+/home/jm/saved/Perlscripts/annotation/run-repeat-masker.bash /data/fish/Annotation/Cvariegatus.fasta  CvarConsensi.fa.classified
 ```
 
 run-repeat-masker.bash:
@@ -141,6 +141,15 @@ done
 
 ```
 
+To run in background in parallel:
+
+```
+for i in `cat CbronList.txt`; do /home/jm/sw/sratoolkit.3.1.0-centos_linux64/bin/fasterq-dump $i -S -e40  done
+```
+
+
+
+
 Each SRR- entry downloaded from the sequence read archive (SRA) has **2 reads per run**. 
 By running the command above on the list.txt accession file (downloaded from NCBI SRA) we will get an SRRxxxxxxxx_1 and an SRRxxxxxxxx_2 file per entry. 
 
@@ -155,6 +164,22 @@ for i in *_1.fastq; do
 done
 
 ```
+
+What Joann ran:
+
+```
+for i in `cat list.txt`; do
+ /home/jm/saved/Perlscripts/annotation/run-trim-galore.sh ${i}_1.fastq ${i}_2.fastq &
+done
+```
+
+might need to run before:
+
+```
+export PATH=$PATH:/home/agomez/miniconda3/bin/
+```
+
+
 
 The scripts are saved here:
 
