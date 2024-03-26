@@ -1,0 +1,29 @@
+# Identify repeats (RepeatModeler)
+
+Make an annotation directory in /data/fish/
+
+Copy the 3 genome assemblies into them and unzip them.
+
+Run RepeatModeler:
+
++ Input
+    + <YourSeq.fasta>
+    
++ Output
+    + .nni etc.
+
+
+```
+export PATH=/home/jm/sw/miniconda3/bin/:$PATH
+
+/home/jm/saved/Perlscripts/annotation/run-repeat.bash <fasta> <my_db_name>
+
+```
+
+
+Provenance
+
++ OS
++ Software
++ Versions
++ Dependencies

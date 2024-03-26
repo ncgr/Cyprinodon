@@ -1,0 +1,79 @@
+# Softmask genome (RepeatMasker)
+
+Link to the classified file in the dated directory that RepeatModeler makes
+(my links didn’t work)
+
+Softmask each in a separate directory first.
+I did softmask in the dated directory that Repeat Modeler made for each  
+
+Put whole path to RepeatMasker because I have a different miniconda:
+
+```
+/home/jm/sw/miniconda3/bin/RepeatMasker --help	
+
+/home/jm/saved/Perlscripts/annotation/run-repeat-masker.bash
+```
+
+
+NOTE: BRAKER software:
+https://github.com/Gaius-Augustus/BRAKER
+
+UPDATE:
+
+Template:
+
+```
+/home/jm/saved/Perlscripts/annotation/run-repeat-masker.bash <fasta> <fa.classified>
+```
+
++ Input
+    + <YourSeq.fasta>
+    + <YourSeq.consensi.fa.classified>
+    
++ Output
+    + <YourSeq.consensi.fa.classified.gff>
+    + <YourSeq.consensi.fa.classified.masked>
+    + <YourSeq.consensi.fa.classified.?>
+    + <YourSeq.consensi.fa.classified.?>
+
+
+Code that worked:
+
+```
+/home/jm/saved/Perlscripts/annotation/run-repeat-masker.bash /data/fish/Annotation/Cbrontotheroides.fasta CbronConsensi.fa.classified
+```
+
+```
+/home/jm/saved/Perlscripts/annotation/run-repeat-masker.bash /data/fish/Annotation/Cdesquamator.fasta CdesConsensi.fa.classified
+```
+
+```
+/home/jm/saved/Perlscripts/annotation/run-repeat-masker.bash /data/fish/Annotation/Cvariegatus.fasta  CvarConsensi.fa.classified
+```
+
+run-repeat-masker.bash:
+
+```
+#! /usr/bin/bash
+# Link to the *classified file in the dated directory it makes.
+# Feed in the fasta file and the classified file
+# repeat environment
+#/home/jm/miniconda3/envs/repeat/bin/RepeatMasker
+/home/jm/miniconda3/envs/repeat/bin/RepeatMasker -pa 16 -gff -nolow -lib $2 $1
+```
+
++ pa - parallel, to use multiple processors
+
++ gff - creates an additional General Feature Finding format output (http://www.sanger.ac.uk/Software/GFF)
+
++ nolow - does not mask low complexity DNA or simple repeats, does not display simple repeats or low_complexity DNA in the annotation
+
++ lib - use the -lib option to specify a custom library of sequences to be masked in the query
+
+Notes:
+
+You can combine the repeats available in the RepeatMasker library  with a custom set of consensus sequences.  To accomplish this use the famdb.py tool:
+
+```
+`./famdb.py -i Libraries/RepeatMaskerLib.h5 families --format fasta_name --ancestors --descendants 'species name' --include-class-in-name`
+```

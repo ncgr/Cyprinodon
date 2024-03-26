@@ -1,0 +1,96 @@
+# Trim RNAseq
+
+## RNAseq data acquisition 
+
+First get the accession list of RNAseq SRA files from NCBI/SRA:
+
+Cvar:
+https://www.ncbi.nlm.nih.gov/Traces/study/?query_key=8&WebEnv=MCID_66031893c3876c0c0e7d41eb&o=acc_s%3Aa 
+
+Cbron:
+https://www.ncbi.nlm.nih.gov/Traces/study/?query_key=4&WebEnv=MCID_65f47f2d1a0a6262163f5ef1&o=acc_s%3Aa 
+
+Cdes:
+https://www.ncbi.nlm.nih.gov/Traces/study/?query_key=3&WebEnv=MCID_65f47f2d1a0a6262163f5ef1&o=acc_s%3Aa
+
++ This accession list will be in a .txt format. 
+
++ It includes all paired-end, RNA, SRA entries per species. 
+
++ In order to pull all of the SRRxxxxxxxx entries to inbre01 (the server) use the following fastq dump command saved under JM's home directory:
+
++ **Input**
+    + <YourSRAaccessionList.txt>
+    
++ **Output** (pair for every SRR on YourSRAaccessionList.txt)
+    + <SRRxxxxxxxx_1.fastq>
+    + <SRRxxxxxxxx_2.fastq>
+
+```
+for i in `cat CbronList.txt`; do
+/home/jm/sw/sratoolkit.3.1.0-centos_linux64/bin/fasterq-dump $i -S
+done
+
+```
+
+To run in background in parallel on multiple threads:
+
+```
+for i in `cat CbronList.txt`; do /home/jm/sw/sratoolkit.3.1.0-centos_linux64/bin/fasterq-dump $i -S -e40  done
+```
+
+Each SRR- entry downloaded from the sequence read archive (SRA) has **2 reads per run**. 
+By running the command above on the list.txt accession file (downloaded from NCBI SRA) we will get an SRRxxxxxxxx_1 and an SRRxxxxxxxx_2 file per entry. 
+
+## Trim reads
+
++ **Input** (pair for every SRR on YourSRAaccessionList.txt)
+    + <SRRxxxxxxxx_1.fastq>
+    + <SRRxxxxxxxx_2.fastq>
+    
++ **Output**
+    + <trimmed.>
+
+Now we need to trim reads _1 and _2. Because we have multiple sequences and 2 reads per sequence, we need to run a loop. Something like the following:
+
+This failed:
+
+```
+for i in *_1.fastq; do
+	bn=`basename $i _1.fastq`
+	~/saved/Perlscripts/annotation/run-trim-galore.sh $i ${bn}_2.fastq &
+done
+
+```
+
+What Joann ran:
+
+```
+for i in `cat list.txt`; do
+ /home/jm/saved/Perlscripts/annotation/run-trim-galore.sh ${i}_1.fastq ${i}_2.fastq &
+done
+```
+
+might need to run before:
+
+```
+export PATH=$PATH:/home/agomez/miniconda3/bin/
+```
+
+The scripts are saved here:
+
+```
+~/saved/Perlscripts/annotation/run-trim-galore.sh forloop ${i}_r1 <read_1> <read_2>
+```
+
+run-trim-galore.sh:
+
+```
+#! /usr/bin/bash
+# read1 read2
+# Installed in Adam's base environment
+export PATH=$PATH:/home/agomez/miniconda3/bin/trim_galore
+trim_galore --paired $1 $2
+
+```
+–paired - 

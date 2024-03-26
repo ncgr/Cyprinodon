@@ -1,0 +1,11 @@
+
+# Alignment of RNA-seq reads to the masked genome assembly (HISAT2)
+
+```
+/home/jm/saved/Perlscripts/run-hisat2-build.sh <genome_fasta> <my_hisat2_db_name>
+
+```
+
+```
+/home/jm/saved/Perlscripts/run-hisat2-paired.sh <ht2-ix> <trimmed_read1> <trimmed_read2> <sam_output>
+```

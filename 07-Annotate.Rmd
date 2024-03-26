@@ -1,0 +1,5 @@
+# Annotation (BRAKER3)
+
+```
+/home/jm/saved/Perlscripts/annotation/run-braker-3.bash output_directory_name genome_name "comma-sep list of bam files"
+```
