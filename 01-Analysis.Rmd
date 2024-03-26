@@ -144,6 +144,8 @@ done
 Each SRR- entry downloaded from the sequence read archive (SRA) has **2 reads per run**. 
 By running the command above on the list.txt accession file (downloaded from NCBI SRA) we will get an SRRxxxxxxxx_1 and an SRRxxxxxxxx_2 file per entry. 
 
+## Trim reads
+
 Now we need to trim reads _1 and _2. Because we have multiple sequences and 2 reads per sequence, we need to run a loop. Something like the following:
 
 ```
