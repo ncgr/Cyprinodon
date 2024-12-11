@@ -5,8 +5,7 @@ documentclass: book
 # url: your book url like https://bookdown.org/yihui/bookdown
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
-  This is the material for a Pangenomics course offered by NCGR in collaboration
-  with NM-INBRE.
+  Pilot Project with NNMC. C.bron, C.var, C.des
 link-citations: no
 github-repo: ncgr/Cyprinodon
 ---

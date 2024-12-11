@@ -1,4 +1,11 @@
-# Softmask genome (RepeatMasker)
+# FixMe
+
+
+
+
+
+
+####Softmask genome (RepeatMasker)
 
 Link to the classified file in the dated directory that RepeatModeler makes
 (my links didn’t work)
